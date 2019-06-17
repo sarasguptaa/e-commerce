@@ -1,0 +1,47 @@
+.form-inline .form-control{
+    height: 40px;
+    /*width: 50em;*/
+    border-radius: 0;
+    border: none;
+}
+.navbarclass{
+    min-height: 7rem;
+    background-color: #232f3e;
+}
+.navItemsClass{
+    color: white !important;
+    font-weight: bold !important;
+}
+.mySearchClass{
+    height: 40px;
+    border-radius: 0;
+    border: none;
+}
+.form-inline .input-group, .form-inline .custom-select{
+    width: 50em;
+}
+.navbar-light .navbar-nav .nav-link{
+    color: white;
+    font-weight: bold;
+}
+#carousel-1{
+    height: 300;
+}
+.w-100{
+    height: 300px;
+}
+.footerCass{
+    min-height: 7rem;
+    background-color: #232f3e;
+    color: #DDD;
+    text-align: center;
+}
+.randomProductsClass{
+    height: 20rem;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    overflow-x: scroll;
+    text-align: left;
+    margin-top: 4%; 
+}

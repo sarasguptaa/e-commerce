@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <!--h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -26,15 +26,93 @@
       <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    </ul-->
+    
+    <div>
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="4000"
+      controls
+      indicators
+      background="#ababab"
+      style="text-shadow: 1px 1px 2px #333;"
+    >
+      <!-- Slides with image only -->
+      <b-carousel-slide v-for="(ele, index) in getRandomData" :key="index" :img-src="require('../'+ele.imgurl)">
+      </b-carousel-slide>
+    </b-carousel>
+  </div>
+    <div>
+      <b-container>
+        <b-row class="randomProductsClass flex-row flex-nowrap" align-v="center">
+            <li v-for="(ele, index) in getSub2Data" :key="index" @click="clickFunction(ele.body.pid)" class="col-2 card" style="font-size:14px">
+              <img :src="require('../'+ele.body.imgurl)" alt="" style="width:150px;">
+              <br><br>{{ele.body.pname}}</li>
+
+        </b-row>
+        <b-row class="randomProductsClass flex-row flex-nowrap" align-v="center">
+
+            <li v-for="(ele, index) in getSub1Data" :key="index" @click="clickFunction(ele.body.pid)" class="col-2 card" style="font-size:14px"><img :src="require('../'+ele.body.imgurl)" alt="" style="width:150px;"><br><br>{{ele.body.pname}}</li>
+          
+        </b-row>
+      </b-container>
+    </div><br><br>
+    <b-container>
+      <b-row>
+        <b-col>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ipsam, voluptatem, impedit saepe deserunt rem aliquid incidunt itaque ratione omnis deleniti assumenda earum accusamus amet, labore sunt esse perferendis molestias.</b-col>
+        <b-col>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error nihil, tempore omnis, quidem nesciunt vel nulla asperiores quos voluptate quasi eveniet quod enim voluptatum quo eos necessitatibus consectetur atque ad?</b-col>
+        <b-col>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta corporis cum saepe sequi quos reprehenderit possimus unde veritatis, minima fugiat quibusdam consequatur id eveniet tenetur veniam, totam est autem facere.</b-col>
+      </b-row>
+    </b-container><br><br>
   </div>
 </template>
 
 <script>
+import Login from '@/pages/Login.vue'
+import {mapActions} from 'vuex'
+import {mapGetters} from 'vuex'
+import router from '../router'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  components:{
+    
+  },
+  data() {
+    return{
+      slide: null
+    }
+  },
+  methods: {
+    ...mapActions(['homeDisplayProd', 'homeDisplaySubProd1','homeDisplaySubProd2','getRandomProd']),
+    clickFunction(pid){
+      router.push({ path: '/products/'+pid})
+    }
+  },
+  computed: {
+    ...mapGetters(['getHomeData','getSub1Data', 'getSub2Data','getRandomData'])
+  },
+  created(){
+    this.$store.dispatch('homeDisplayProd',{
+      success: ()=>{},
+      failure: ()=>{}
+    })
+    this.$store.dispatch('homeDisplaySubProd1',{
+      success: ()=>{},
+      failure: ()=>{}
+    })
+    this.$store.dispatch('homeDisplaySubProd2',{
+      success: ()=>{},
+      failure: ()=>{}
+    })
+    this.$store.dispatch('getRandomProd',{
+      success: ()=>{},
+      failure: ()=>{}
+    })
   }
 }
 </script>
@@ -54,5 +132,11 @@ li {
 }
 a {
   color: #42b983;
+}
+.card{
+  border: none;
+  border-radius: 0;
+  margin:0 5px 0 0px;
+  display: inline;
 }
 </style>

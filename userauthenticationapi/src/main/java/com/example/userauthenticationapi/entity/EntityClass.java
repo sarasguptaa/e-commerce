@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="userauth")
 public class EntityClass {
-    final static public String TABLE_NAME="user";
+    final static public String TABLE_NAME="userauth";
 
     @Id
     @GeneratedValue(generator = "uuid")

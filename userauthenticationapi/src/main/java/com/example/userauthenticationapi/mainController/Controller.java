@@ -14,21 +14,32 @@ public class Controller {
 
     @Autowired
     ServiceInterface serviceInterface;
-    @CrossOrigin(origins = "http://localhost:8080")
 
+    @RequestMapping(method = RequestMethod.GET,value = "/getEmail/{pid}")
+    public ResponseEntity<?> getEmail(@PathVariable("pid") String id)
+    {
+        EntityClass entityClass=serviceInterface.findOne(id);
+        String arr[]=new String[2];
+        arr[0]=entityClass.getEmailAdd();
+        arr[1]=entityClass.getFirstName();
+        return new ResponseEntity<String[]>(arr,HttpStatus.OK);
+    }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.POST,value = "/signup")
     public ResponseEntity<?> saveData(@RequestBody EntityDtoClass entityDtoClass)
     {
 
         EntityClass entityClass=new EntityClass();
-        if(serviceInterface.findByEmailAdd(entityClass.getEmailAdd())!=null)
-        {BeanUtils.copyProperties(entityDtoClass,entityClass);
-        EntityClass entityClass1=serviceInterface.save(entityClass);
-        return new ResponseEntity<EntityClass>(entityClass1, HttpStatus.OK);}
+        if(serviceInterface.findByEmailAdd(entityClass.getEmailAdd())==null)
+        {
+            BeanUtils.copyProperties(entityDtoClass,entityClass);
+            EntityClass entityClass1=serviceInterface.save(entityClass);
+            return new ResponseEntity<EntityClass>(entityClass1, HttpStatus.OK);
+        }
         else return new ResponseEntity<String>("Already Exists",HttpStatus.OK);
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://localhost:8081/")
 
     @RequestMapping(method = RequestMethod.POST,value = "/login")
     public  ResponseEntity<?> findBy(@RequestBody EntityDtoClass email)

@@ -19,18 +19,19 @@
                           </b-dropdown>
                       <b-form-input size="sm" placeholder="Search" v-model="searchvar"></b-form-input>
                       <b-input-group-append>
-                        <b-button size="sm" class="my-2 my-sm-0 mySearchClass" :to="'/search/'+ searchvar" @click="searchFunction()">Search</b-button>
+                        <b-button size="sm" class="my-2 my-sm-0 mySearchClass" :to="'/search/'+ searchvar" @click="searchFunction()">    <font-awesome-icon icon="search" /></b-button>
                       </b-input-group-append>
                     </b-input-group>
                   </b-nav-form>
               <!-- Right aligned nav items -->
               <b-navbar-nav class="ml-auto">
-                <b-nav-item-dropdown right>
+                <!--b-nav-item-dropdown right-->
                   <!-- Using 'button-content' slot -->
-                  <template slot="button-content"><em>User</em></template>
+                  <!--template slot="button-content"><em>User</em></template>
                   <b-dropdown-item href="#">Profile</b-dropdown-item>
                   <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-                </b-nav-item-dropdown>
+                </b-nav-item-dropdown-->
+                <b-nav-item to="/cart"><span class="navItemsClass"><font-awesome-icon icon="shopping-cart" /></span></b-nav-item>
               </b-navbar-nav>
             </b-collapse>
           </b-navbar>
@@ -94,5 +95,8 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0
+}
+.navItemsClass:hover{
+  cursor: pointer!important;
 }
 </style>

@@ -3,8 +3,9 @@ import Resource from 'vue-resource'
 
 Vue.use(Resource)
 
-const urlsaras="172.16.29.8:8082";
-const urlaman="172.16.29.20:8081";
+const urlsaras="172.16.26.33:8082";
+const urlaman="172.16.26.34:8081";
+const urlamanCart="172.16.26.34:8080";
 const urlniket="172.16.28.215:8080";
 const commonApi = {
     userAuthApi (data, path, cb, errorHandler) {
@@ -134,7 +135,6 @@ const commonApi = {
         })
     },
     getCartDetails(data, cb, errorhandler) {
-        debugger
         let headerObject = {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
@@ -142,7 +142,35 @@ const commonApi = {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        Vue.http.get('http://'+urlsaras+'/getCartWithId/'+data, {headers: headerObject}).then((res) => {
+        Vue.http.get('http://'+urlamanCart+'/findCartWithId/57339e44-c65a-4464-a81a-8434107d52d7', {headers: headerObject}).then((res) => {
+            cb(res)
+        }, (error) => {
+            errorhandler(error)
+        })
+    },
+    addToCart(data, cb, errorhandler) {
+        let headerObject = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        Vue.http.post('http://'+urlamanCart+'/saveCart/', data, {headers: headerObject}).then((res) => {
+            cb(res)
+        }, (error) => {
+            errorhandler(error)
+        })
+    },
+    confirmOrder(data, cb, errorhandler) {
+        let headerObject = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        Vue.http.post('http://'+urlamanCart+'/saveOrder/', data, {headers: headerObject}).then((res) => {
             cb(res)
         }, (error) => {
             errorhandler(error)

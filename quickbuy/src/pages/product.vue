@@ -25,8 +25,8 @@
                     </p>
                 </b-col>
                 <b-col cols="2">
-                    <button>Add to Cart</button><br><br>
-                    <button>Buy Now</button>
+                    <button @click="addToCartFunction(getBestProdData)">Add to Cart</button><br><br>
+                    <!--button>Buy Now</button-->
                 </b-col>
             </b-row>
         </b-container>
@@ -71,12 +71,12 @@
                     </div>
                     </b-row>
                     <b-row style="margin-bottom:1px;">
-                        <button>Add to Cart</button>
+                        <button @click="addToCartFunction(ele)">Add to Cart</button>
                     </b-row>
                     
-                    <b-row>
+                    <!--b-row>
                         <button>Buy Now</button>
-                    </b-row>
+                    </b-row-->
                 </b-col>
             </b-row>
          </b-container>
@@ -91,7 +91,14 @@ export default {
     name:'product',
     props: ['prodpid'],
     methods: {
-        ...mapActions(['getAllProdWithSamePid', 'getBestProdPid'])
+        ...mapActions(['getAllProdWithSamePid', 'getBestProdPid','addToCart']),
+        addToCartFunction(ele){
+            this.$store.dispatch('addToCart',{
+                data: ele,
+                success: ()=>{alert("Product Added to Cart!!")},
+                failure: ()=>{alert("No product added to cart!!")}
+            })
+        }
     },
     computed: {
         ...mapGetters(['getAllPidProdData','getBestProdData'])

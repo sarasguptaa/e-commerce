@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import Login from '@/pages/Login.vue'
 import {mapActions} from 'vuex'
 import {mapGetters} from 'vuex'
 import router from '../router'
@@ -78,9 +77,6 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  },
-  components:{
-    
   },
   data() {
     return{

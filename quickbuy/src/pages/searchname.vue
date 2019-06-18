@@ -20,13 +20,14 @@
         <b-container v-if="getSearchData.response">
             <b-row class="merchantRow" v-for="(ele, index) in getSearchData.response" :key="index">
                 <b-col cols="4" class="cardMerchant">
-                    <img :src="require('../'+ele.imgurl)" class="img-responsive imgMerchant" alt="iphone" id="displayImg">
+                    <img :src="require('../'+ele.imgurl)" class="img-responsive imgMerchant" :alt="ele.pname" id="displayImg">
                 </b-col>
                 <b-col cols="8" style="text-align: left" class="cardMerchant">
                     <div class="myHeader">
                         <h3>{{ele.pname}}</h3>
                         <div class="star-ratings-sprite" ><span :style="'width:'+ ele.rating*20+'%'" class="star-ratings-sprite-rating"></span></div>
-                        <p style="padding:10px 0 0 0; margin:0">by: ABCD</p>
+                        <!--p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p-->
+                        <p style="padding:10px 0 0 0; margin:0">₹{{ele.price}}</p>
                     </div>
                 </b-col>
             </b-row>

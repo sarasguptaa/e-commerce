@@ -33,6 +33,16 @@ export default new Router({
       path: '/products/:prodpid',
       name: 'products',
       component: () => import('@/views/Products.vue')
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('@/views/Cart.vue')
+    },
+    {
+      path: '/cart/order',
+      name: 'order',
+      component: () => import('@/views/Order.vue')
     }
   ]
 })

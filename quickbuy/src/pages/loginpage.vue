@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="loginpage">
         <div>
             <ul>
                 <li><div class="fdiv">Email:</div><input type="email" name="email" v-model="loginChild.emailAdd"></li><br>
@@ -14,7 +14,7 @@
         import {mapActions} from 'vuex'
         import {mapGetters} from 'vuex'
         export default {
-            name: "Login.vue",
+            name: "loginpage",
             data(){
                 return {
                     loginChild: {

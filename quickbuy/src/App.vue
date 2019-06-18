@@ -18,10 +18,21 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import { mapActions } from 'vuex';
 export default {
   name: 'App',
   components: {
     Navbar
+  },
+  methods: {
+    ...mapActions(['getCart'])
+  },
+  created(){
+    this.$store.dispatch('getCart',{
+        data: "",
+        success: ()=>{},
+        failure: ()=>{}
+    })
   }
 }
 </script>

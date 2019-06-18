@@ -17,7 +17,11 @@ export default new Vuex.Store({
     subcatData: {},
     randomData: {},
     allPidProdData: {},
-    bestProdData: {}
+    bestProdData: {},
+    cartData: {
+      "userId": "57339e44-c65a-4464-a81a-8434107d52d7",
+      "productClassList": []
+    }
   },
   mutations: {
     login_data: (state, logData) => {
@@ -49,6 +53,23 @@ export default new Vuex.Store({
     },
     best_prod_data: (state, hData) => {
       state.bestProdData = hData;
+    },
+    cart_data: (state, hData) => {
+      state.cartData = hData;
+    },
+    cart_data_push: (state, hData) => {
+      state.cartData.productClassList.push(hData);
+    },
+    cart_data_pop: (state, hData) => {
+      state.cartData.productClassList.splice(hData,1);
+    },
+    cart_data_add_quantity: (state, hData) => {
+      state.cartData.productClassList[hData].quantity="" + (parseInt(state.cartData.productClassList[hData].quantity)+1);
+    },
+    cart_data_remove_quantity: (state, hData) => {
+      state.cartData.productClassList[hData].quantity="" + (parseInt(state.cartData.productClassList[hData].quantity)-1);
+      if(state.cartData.productClassList[hData].quantity=="0")
+        state.cartData.productClassList.splice(hData, 1)
     }
   },
   actions: {
@@ -144,7 +165,7 @@ export default new Vuex.Store({
     getAllProdWithSamePid: ({commit}, {data, success, failure}) => {
       commonApi.getAllProdWithSamePid(data, (response)=>{
         commit('all_pid_prod_data', response.body);
-        console.log(response.body);
+        //console.log(response.body);
         success();
       },
       (error) => {
@@ -154,6 +175,58 @@ export default new Vuex.Store({
     getBestProdPid: ({commit}, {data, success, failure}) => {
       commonApi.getFromPid(data, (response)=>{
         commit('best_prod_data', response.body);
+        //console.log(response.body);
+        success();
+      },
+      (error) => {
+        failure(error.body.message)
+      });
+    },
+    addToCart: ({commit, state}, {data, success, failure}) => {
+      let ind=-1;
+      state.cartData.productClassList.forEach((ele, index)=>{
+        if(ele.pid==data.pid && ele.mid==data.mid){
+          ind = index;
+        }
+      })
+      if(ind==-1){
+        data["quantity"] = "1";
+        commit('cart_data_push', data);
+      }
+      else
+        commit('cart_data_add_quantity', ind)
+      data = state.cartData;
+      commonApi.addToCart(data, ()=>{
+        //console.log(response.body);
+        success();
+      },
+      (error) => {
+        failure(error.body.message)
+      });
+    },
+    removeFromCart: ({commit, state}, {data, success, failure}) => {
+      let ind=-1;
+      state.cartData.productClassList.forEach((ele, index)=>{
+        if(ele.pid==data.pid && ele.mid==data.mid){
+          ind = index;
+        }
+      })
+      if(ind!=-1){
+        commit('cart_data_remove_quantity', ind)
+      }
+      data = state.cartData;
+      commonApi.addToCart(data, ()=>{
+        //console.log(response.body);
+        success();
+      },
+      (error) => {
+        failure(error.body.message)
+      });
+    },
+    getCart: ({commit}, {data, success, failure}) => {
+      commonApi.getCartDetails(data, (response)=>{
+        delete response.body.teamId;
+        commit('cart_data', response.body)
         console.log(response.body);
         success();
       },
@@ -192,6 +265,9 @@ export default new Vuex.Store({
     },
     getBestProdData: state => {
       return state.bestProdData;
+    },
+    getCartData: state => {
+      return state.cartData;
     }
   }
 })

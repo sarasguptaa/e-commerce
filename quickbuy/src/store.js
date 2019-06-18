@@ -227,7 +227,7 @@ export default new Vuex.Store({
       commonApi.getCartDetails(data, (response)=>{
         delete response.body.teamId;
         commit('cart_data', response.body)
-        console.log(response.body);
+        //console.log(response.body);
         success();
       },
       (error) => {

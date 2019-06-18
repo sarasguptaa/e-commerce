@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
 @Document(collection = OrderClass.COLLECTION_NAME)
 public class OrderClass {
 
@@ -14,7 +16,7 @@ public class OrderClass {
     @Field(value = "user_id")
     private String userId;
     @Field(value="orderList")
-    private ProductClass productClass;
+    private List<ProductClass> productClassList;
     @Field(value = "address")
     private String address;
 
@@ -38,12 +40,12 @@ public class OrderClass {
         this.userId = userId;
     }
 
-    public ProductClass getProductClass() {
-        return productClass;
+    public List<ProductClass> getProductClassList() {
+        return productClassList;
     }
 
-    public void setProductClass(ProductClass productClass) {
-        this.productClass = productClass;
+    public void setProductClassList(List<ProductClass> productClassList) {
+        this.productClassList = productClassList;
     }
 
     public String getAddress() {

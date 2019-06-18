@@ -11,6 +11,16 @@ public class ProductClass {
     private float price;
     private String imgurl;
     private String quantity;
+    private String merchantName;
+
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
 
     public String getQuantity() {
         return quantity;

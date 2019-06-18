@@ -16,5 +16,8 @@ public interface RepositoryClass extends CrudRepository<EntityClass,String> {
     @Transactional
     @Query(value = "update merchant_details set quantity_sold=:quantsold,stock=:stock,rating=:rating where mid=:mid ",nativeQuery = true)
     public void updateDetails(@Param("mid") String mid,@Param("stock") int stock, @Param("quantsold")int quantsold,@Param("rating") float rating);
+    @Query(value = "select max(quantity_sold) from merchant_details",nativeQuery = true)
+    public String getMaxValue();
+
 
 }

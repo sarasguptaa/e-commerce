@@ -10,5 +10,6 @@ public interface ServiceInterface {
     public EntityClass getOne(String mid);
     public EntityClass getByNoOfProd(int pro);
     public void updateDetails( String mid, int stock, int quantsold,float rating);
+    public String maxStock();
 
 }

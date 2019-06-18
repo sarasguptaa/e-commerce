@@ -33,4 +33,9 @@ public class ServiceImpl implements ServiceInterface {
     public void updateDetails(String mid, int stock, int quantsold, float rating) {
         repositoryClass.updateDetails(mid,stock,quantsold,rating);
     }
+
+    @Override
+    public String maxStock() {
+        return repositoryClass.getMaxValue();
+    }
 }

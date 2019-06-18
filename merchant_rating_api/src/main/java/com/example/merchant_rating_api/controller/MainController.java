@@ -48,24 +48,32 @@ public class MainController {
 
 
 
-    @RequestMapping(method = RequestMethod.GET,value = "/updateRating")
-    public void updateRating(@RequestBody EntityDto entityDto)
+    @RequestMapping(method = RequestMethod.GET,value = "/updateRating/{mid}/{quantity}")
+    public String updateRating(@PathVariable ("mid")String mid,@PathVariable("quantity") String quantity)
     {
-        String tempMid=entityDto.getMid();
+        String tempMid=mid;
+        float quant= Float.parseFloat(quantity);
         EntityClass entityClass=serviceInterface.getOne(tempMid);
         if(entityClass!=null)
         {
-            int noprod=entityClass.getNoOfProducts();
-            int initstock=entityClass.getInitialAvail();
-            int stock=entityClass.getStockLeft();
-            int quantsold=entityClass.getQuantitySold();
+            float maxStock= Float.parseFloat(serviceInterface.maxStock());
+            float stockUpdated=entityClass.getStockLeft()-quant;
+            float rating;
+            if(maxStock==0f)
+            {
+                maxStock= quant;
+                rating=1f;
+            }
+            else{
+                maxStock+=Float.valueOf(quantity);
+                rating=quant/maxStock;
 
-            int stockSold=entityDto.getStockLeft();
-            float newRating=((float)noprod/(float)64)+((float)stock-(float)stockSold)/(float)initstock+((((float)stockSold+(float)quantsold)/(float)initstock)*(float)3);
-            int newquantsold=quantsold+stockSold;
-            int newStock=stock-stockSold;
-            serviceInterface.updateDetails(tempMid,newStock,newquantsold,newRating);
+            }
+            serviceInterface.updateDetails(tempMid,(int)stockUpdated,Integer.parseInt(quantity),rating);
+            return "saveCart";
         }
+        else
+            return "Merchant Not Found";
     }
 
 }

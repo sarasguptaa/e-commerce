@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class Controller {
 
     @Autowired
@@ -25,21 +26,19 @@ public class Controller {
         return new ResponseEntity<String[]>(arr,HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.POST,value = "/signup")
     public ResponseEntity<?> saveData(@RequestBody EntityDtoClass entityDtoClass)
     {
 
         EntityClass entityClass=new EntityClass();
-        if(serviceInterface.findByEmailAdd(entityClass.getEmailAdd())==null)
+        if(serviceInterface.findByEmailAdd(entityDtoClass.getEmailAdd())==null)
         {
             BeanUtils.copyProperties(entityDtoClass,entityClass);
             EntityClass entityClass1=serviceInterface.save(entityClass);
             return new ResponseEntity<EntityClass>(entityClass1, HttpStatus.OK);
         }
-        else return new ResponseEntity<String>("Already Exists",HttpStatus.OK);
+        else return new ResponseEntity<String>("Already Exists",HttpStatus.BAD_REQUEST);
     }
-    @CrossOrigin(origins = "http://localhost:8081/")
 
     @RequestMapping(method = RequestMethod.POST,value = "/login")
     public  ResponseEntity<?> findBy(@RequestBody EntityDtoClass email)

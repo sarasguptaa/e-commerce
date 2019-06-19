@@ -81,7 +81,7 @@ public class ControllerClass {
         for(ProductClass productClass:arr)
         {
             System.out.println("Previous price "+productClass.getPrice());
-            String uri="http://172.16.26.33:8082//getPrice/"+productClass.getPid();
+            String uri="http://172.16.26.33:8082/getPrice/"+productClass.getPid();
             try{
             RestTemplate restTemplate=new RestTemplate();
             String result=restTemplate.getForObject(uri,String.class);
@@ -89,7 +89,11 @@ public class ControllerClass {
             System.out.println("new price "+result);}
             catch (Exception e)
             {
-                productClass.setPrice(productClass.getPrice());
+                System.out.println("calling niket");
+                uri="http://172.16.26.45:8080/getPrice/"+productClass.getPid();
+                RestTemplate restTemplate=new RestTemplate();
+                String result=restTemplate.getForObject(uri,String.class);
+                System.out.println("Niket's"+result);
             }
 
         }
@@ -106,7 +110,7 @@ public class ControllerClass {
 
     }
 
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET,value = "/getOrderById/{uid}")
     public ResponseEntity<List<OrderClass>> getOrderById(@PathVariable("uid") String id){
 
@@ -120,6 +124,32 @@ public class ControllerClass {
         orderClassServiceInterface.save(orderClass);
     }
 
+    private class CustomRunnable implements Runnable{
+
+        String uri;
+        String result="";
+
+        public CustomRunnable(String uri) {
+            this.uri = uri;
+        }
+
+        @Override
+        public void run() {
+            while (!result.equals("Not Possible")&&!result.equals("Done")) {
+                RestTemplate restTemplate = new RestTemplate();
+                try{
+                    result=restTemplate.getForObject(uri, String.class);
+                    System.out.println("Result is "+result);
+                    Thread.sleep(2000);
+                }
+                catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
+            }
+            System.out.println("Done Updating");
+        }
+    }
 
     @RequestMapping(method = RequestMethod.POST,value = "/saveOrder")
     public ResponseEntity<?> saveOrder(@RequestBody OrderClass orderClass) throws Exception
@@ -128,17 +158,38 @@ public class ControllerClass {
         List<ProductClass> productClass=orderClass.getProductClassList();
         List<ProductClass> notAvailable=new ArrayList<>();
         List<ProductClass> placedOrders=new ArrayList<>();
+        boolean serverDown=false;
         for(ProductClass productClass1:productClass)
         {
             String uri1="http://172.16.26.33:8082/updateStock/"+productClass1.getPid()+"/"+productClass1.getQuantity()+"/"+productClass1.getMid();
+            String uri2="http://172.16.26.45:8080/updateStock/"+productClass1.getPid()+"/"+productClass1.getQuantity()+"/"+productClass1.getMid();
             RestTemplate restTemplate=new RestTemplate();
-            String result=restTemplate.getForObject(uri1,String.class);
+            String result;
+            try{
+            result=restTemplate.getForObject(uri1,String.class);}
+            catch (Exception e)
+            {   serverDown=true;
+                result=restTemplate.getForObject(uri2,String.class);
+            }
             if(result.equals("Not Possible"))
             {
                 notAvailable.add(productClass1);
             }
             else if(result.equals("Done"))
+            {
                 placedOrders.add(productClass1);
+                if(serverDown==false)           //update search
+                {
+                    Thread thread=new Thread(new CustomRunnable(uri2));
+                    thread.start();
+
+                }
+                else        //update product
+                {
+                    Thread thread=new Thread(new CustomRunnable(uri1));
+                    thread.start();
+                }
+            }
         }
 
         for(ProductClass productClass1:placedOrders)

@@ -1,6 +1,10 @@
 <template>
     <div class="searchname">
-        <div v-if="!getSearchData.response" >No Search Query</div>
+        <div v-if="!getSearchData.response">
+            <div class="text-center" style="position: fixed; top: 35%; left: 45%;">
+                <b-spinner style="width: 10rem; height: 10rem;" label="Spinning"></b-spinner>
+            </div>
+        </div>
         <div v-if="getSearchData.response" style="margin-bottom: 15px; text-align: left;width: 100%" class="card">
             <b-container>
                 <b-row align-v="center">
@@ -25,8 +29,7 @@
                 <b-col cols="8" style="text-align: left" class="cardMerchant">
                     <div class="myHeader" style="cursor: pointer" @click="clickFunction(ele.pid)">
                         <h3>{{ele.pname}}</h3>
-                        <div class="star-ratings-sprite" ><span :style="'width:'+ ele.rating*20+'%'" class="star-ratings-sprite-rating"></span></div>
-                        <!--p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p-->
+                        <div class="star-ratings-sprite" ><span :style="'width:'+ ele.rating*100+'%'" class="star-ratings-sprite-rating"></span></div>
                         <p style="padding:10px 0 0 0; margin:0">₹{{ele.price}}</p>
                     </div>
                 </b-col>

@@ -13,6 +13,8 @@
                         </b-col>
                         <b-col cols="8" style="text-align: left">
                             <div class="myHeader">
+                                {{ele.pid}}
+                                {{ele.mid}}
                                 <h3 style="font-size: 100%">{{ele.pname}}</h3>
                                 <p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p>
                                 <p style="padding:10px 0 0 0; margin:0">Quantity: {{ele.quantity}}</p>
@@ -89,19 +91,36 @@ export default {
                     this.$store.dispatch('updateCart', response.body.productClassList)
                     console.log(response)
                     if(response.body.productClassList.length===0){
-                        alert("Order Confirmed!")
+                        this.$bvToast.toast("Order Placed!!",{
+                            title: "Success Message",
+                            toaster: "b-toaster-top-center",
+                            solid: true
+                        })
                         router.push({path: "/"})
                     }
                     else{
-                        alert("Order not Placed Check Cart")
+                        this.$bvToast.toast("Order not placed!! Please check the cart!!",{
+                            title: "Failure Message",
+                            toaster: "b-toaster-top-center",
+                            solid: true
+                        })
                         router.push({path: "/cart"})
                     }
                 },(error)=>{
-                    alert("Order Not Placed")
+                    this.$bvToast.toast(msg,{
+                        title: "Error Message",
+                        toaster: "b-toaster-top-center",
+                        solid: true
+                    })
                 });
             }
-            else
-                alert("Enter an address")
+            else{
+                this.$bvToast.toast("Enter an Address!!",{
+                    title: "Warning!!",
+                    toaster: "b-toaster-top-center",
+                    solid: true
+                })
+            }
         }
     }
 }

@@ -150,7 +150,7 @@ export default new Vuex.Store({
       commonApi.getFromSubcid('1',(response)=>{
         var a=[];
         response.body.pid.forEach(element => {
-          commonApi.getFromPid(element, (response2)=>{a.push(response2)},(error2)=>{})
+          commonApi.getFromPid(element, (response2)=>{a.push(response2)},()=>{})
         });
         commit('sub1_data', a);
         success();
@@ -163,7 +163,7 @@ export default new Vuex.Store({
       commonApi.getFromSubcid('2',(response)=>{
         var a=[];
         response.body.pid.forEach(element => {
-          commonApi.getFromPid(element, (response2)=>{a.push(response2)},(error2)=>{})
+          commonApi.getFromPid(element, (response2)=>{a.push(response2)},()=>{})
         });
         commit('sub2_data', a);
         success();
@@ -176,7 +176,7 @@ export default new Vuex.Store({
       commonApi.getFromSubcid(data,(response)=>{
         let a=[];
         response.body.pid.forEach(element => {
-          commonApi.getFromPid(element, (response2)=>{a.push(response2)},(error2)=>{})
+          commonApi.getFromPid(element, (response2)=>{a.push(response2)},()=>{})
         });
         commit('catdisplay_data', a);
         success();

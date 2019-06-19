@@ -28,6 +28,8 @@
                 <hr>
             
                 </div>
+                <h3>Total: ₹{{totalSun(element.productClassList)}}</h3>
+                <hr>
             </b-row>
             <hr>
         </b-container>
@@ -39,7 +41,14 @@ import {mapGetters, mapActions} from 'vuex';
 export default {
     name: 'orderhistorypage',
     methods: {
-        ...mapActions(['orderHistory'])
+        ...mapActions(['orderHistory']),
+        totalSun(obj){
+            let sum = 0;
+            obj.forEach(element => {
+                sum += parseInt(element.price)*parseInt(element.quantity)
+            });
+            return sum
+        }
     },
     computed:{
         ...mapGetters(['getOrderhistoryData','getLoginData'])

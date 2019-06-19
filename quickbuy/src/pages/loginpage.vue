@@ -62,11 +62,19 @@ export default {
                 success: ()=>{},
                 failure: ()=>{}
             })
-            alert("Login Success!")
-            router.push({path: "/"})
+            this.$bvToast.toast("Login Success!!",{
+                title: "Success Message",
+                toaster: "b-toaster-top-center",
+                solid: true
+            })
+            setTimeout(router.push({path: "/"}), 3000)
         },
         loginFailure(msg){
-            alert(msg)
+            this.$bvToast.toast(msg,{
+                title: "Failure Message",
+                toaster: "b-toaster-top-center",
+                solid: true
+            })
         },
         callLogin(){
             this.$store.dispatch('setLoginData', {

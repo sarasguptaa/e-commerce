@@ -8,7 +8,7 @@
                 <b-col cols="6" style="text-align: left" class="card">
                     <div class="myHeader">
                         <h3>{{getBestProdData.pname}}</h3>
-                        <div class="star-ratings-sprite" ><span :style="'width:'+ getBestProdData.merchantRating*20+'%'" class="star-ratings-sprite-rating"></span></div>
+                        <div class="star-ratings-sprite" ><span :style="'width:'+ getBestProdData.merchantRating*100+'%'" class="star-ratings-sprite-rating"></span></div>
                         <p style="padding:10px 0 0 0; margin:0">by: {{getBestProdData.merchantName}}</p>
                         <p style="padding:10px 0 0 0; margin:0">₹{{getBestProdData.price}}</p>
                     </div>
@@ -19,7 +19,6 @@
                 </b-col>
                 <b-col cols="2">
                     <button @click="addToCartFunction(getBestProdData)">Add to Cart</button><br><br>
-                    <!--button>Buy Now</button-->
                 </b-col>
             </b-row>
         </b-container>
@@ -34,7 +33,7 @@
                         <b-row style="text-align: left;">
                             <div class="myHeader">
                             <h4 style="font-size: 2.5vh">{{ele.pname}}</h4>
-                            <div class="star-ratings-sprite" ><span :style="'width:'+ ele.merchantRating*20+'%'" class="star-ratings-sprite-rating"></span></div>
+                            <div class="star-ratings-sprite" ><span :style="'width:'+ ele.merchantRating*100+'%'" class="star-ratings-sprite-rating"></span></div>
                             <p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p>
                             <p style="padding:10px 0 0 0; margin:0">₹{{ele.price}}</p>
                         </div>
@@ -43,9 +42,6 @@
                             <button @click="addToCartFunction(ele)">Add to Cart</button>
                         </b-row>
                     </b-container>
-                    <!--b-row>
-                        <button>Buy Now</button>
-                    </b-row-->
                 </b-col>
             </b-row>
             <hr>
@@ -67,12 +63,24 @@ export default {
             {
                 this.$store.dispatch('addToCart',{
                     data: ele,
-                    success: ()=>{alert("Product Added to Cart!!")},
-                    failure: ()=>{alert("No product added to cart!!")}
+                    success: ()=>{this.$bvToast.toast("Product added to cart!!",{
+                        title: "Success Message",
+                        toaster: "b-toaster-top-center",
+                        solid: true
+                    })},
+                    failure: ()=>{this.$bvToast.toast("Product not added to cart!!",{
+                        title: "Failure Message",
+                        toaster: "b-toaster-top-center",
+                        solid: true
+                    })}
                 })
             }
             else{
-                alert("Please Login!!")
+                this.$bvToast.toast("Please Login!!",{
+                    title: "Warning",
+                    toaster: "b-toaster-top-center",
+                    solid: true
+                })
                 router.push({path:"/login"})
             }
         }

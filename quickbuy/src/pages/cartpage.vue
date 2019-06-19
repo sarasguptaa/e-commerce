@@ -58,7 +58,7 @@ export default {
             this.$store.dispatch('addToCart',{
                 data: ele,
                 success: ()=>{},
-                failure: ()=>{alert("No product added to cart!!")}
+                failure: ()=>{}
             })
             this.$forceUpdate();
         },
@@ -66,7 +66,7 @@ export default {
             this.$store.dispatch('removeFromCart',{
                 data: ele,
                 success: ()=>{},
-                failure: ()=>{alert("No product added to cart!!")}
+                failure: ()=>{}
             })
             this.$forceUpdate();
         },
@@ -100,6 +100,7 @@ export default {
 }
 .imgMerchant{
     height: 100%;
+    max-width: 100%;
 }
 .myHeader{
     padding: 10px;

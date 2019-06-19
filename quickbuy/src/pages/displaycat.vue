@@ -8,8 +8,7 @@
                 <b-col cols="8" style="text-align: left" class="cardMerchant">
                     <div class="myHeader" style="cursor: pointer" @click="clickFunction(ele.body.pid)">
                         <h3>{{ele.body.pname}}</h3>
-                        <div class="star-ratings-sprite" ><span :style="'width:'+ ele.body.rating*20+'%'" class="star-ratings-sprite-rating"></span></div>
-                        <!--p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p-->
+                        <div class="star-ratings-sprite" ><span :style="'width:'+ ele.body.rating*100+'%'" class="star-ratings-sprite-rating"></span></div>
                         <p style="padding:10px 0 0 0; margin:0">₹{{ele.body.price}}</p>
                     </div>
                 </b-col>

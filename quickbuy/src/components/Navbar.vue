@@ -23,8 +23,6 @@
                     </b-input-group>
                   </b-nav-form>
               <b-navbar-nav class="ml-auto">
-                <!--b-nav-item v-if="getLoginData" style="font-size:30px; font-weight: bold"><span class="navItemsClass">{{getLoginData.firstName}}</span></b-nav-item-->
-
                 <b-nav-item v-if="getLoginData" style="font-size:30px; font-weight: bold">
                   <span class="navItemsClass">
                     <b-dropdown style="margin-bottom: 4px;" :text="getLoginData.firstName">
@@ -38,9 +36,17 @@
                   </span>
                 </b-nav-item>
 
-                <!--b-nav-item v-if="getLoginData" @click="logoutFunction()" style="font-size:30px; font-weight: bold"><span class="navItemsClass"><font-awesome-icon icon="sign-out-alt" /></span></b-nav-item-->
                 <b-nav-item v-if="!getLoginData" style="font-size:30px" to="/login"><span class="navItemsClass"><font-awesome-icon icon="user" /></span></b-nav-item>
-                <b-nav-item style="font-size:30px" to="/cart"><span class="navItemsClass"><font-awesome-icon icon="shopping-cart" /></span></b-nav-item>
+                <b-nav-item style="font-size:30px" to="/cart">
+                  <span class="navItemsClass">
+                      <font-awesome-layers>
+                        <font-awesome-icon icon="shopping-cart" />
+                        <font-awesome-layers-text v-if="getLoginData"
+                          class="text-white fa-layers-counter" style="top:33px; right:15px; transform: scale(.4); background-color:#232f3e"
+                          transform=" up-1 right-2">{{getCartData.productClassList.length}}</font-awesome-layers-text>
+                      </font-awesome-layers>
+                  </span>
+                </b-nav-item>
               </b-navbar-nav>
             </b-collapse>
           </b-navbar>
@@ -93,7 +99,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getSearchData','getNavbarData','getLoginData'])
+        ...mapGetters(['getSearchData','getNavbarData','getLoginData', 'getCartData'])
     },
     created(){
       this.$store.dispatch('getAllRecords', {

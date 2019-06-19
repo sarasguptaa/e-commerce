@@ -160,7 +160,7 @@ export default new Vuex.Store({
       });
     },
     homeDisplaySubProd2: ({commit}, {success, failure}) => {
-      commonApi.getFromSubcid('2',(response)=>{
+      commonApi.getFromSubcid('8',(response)=>{
         var a=[];
         response.body.pid.forEach(element => {
           commonApi.getFromPid(element, (response2)=>{a.push(response2)},()=>{})

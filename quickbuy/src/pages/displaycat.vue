@@ -1,6 +1,10 @@
 <template>
     <div class="displaycat">
         <b-container v-if="getCatdisplayData">
+            <b-row style="text-align:left;">
+                <b-col cols="12" class="card" style="padding: 15px 0 5px 40px"><h2>{{subname}}</h2></b-col>
+            </b-row>
+            <hr>
             <b-row class="merchantRow" v-for="(ele, index) in getCatdisplayData" :key="index">
                 <b-col cols="4" class="cardMerchant">
                     <img :src="require('@/'+ele.body.imgurl)" style="cursor: pointer" class="img-responsive imgMerchant" :alt="ele.body.pname" id="displayImg" @click="clickFunction(ele.body.pid)">

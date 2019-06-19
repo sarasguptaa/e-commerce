@@ -11,22 +11,22 @@
       style="text-shadow: 1px 1px 2px #333;"
     >
       <!-- Slides with image only -->
-      <b-carousel-slide v-for="(ele, index) in getRandomData" :key="index" :img-src="require('../'+ele.imgurl)" >
+      <b-carousel-slide v-for="(ele, index) in imgArr" :key="index" :img-src="require('../img/'+ele+'.jpg')" >
       </b-carousel-slide>
     </b-carousel>
   </div>
     <div>
       <b-container>
         <b-row class="randomProductsClass flex-row flex-nowrap" align-v="center">
-            <li v-for="(ele, index) in getSub2Data" :key="index" @click="clickFunction(ele.body.pid)" class="col-2 card" style="font-size:14px">
+
+            <li v-for="(ele, index) in getSub1Data" :key="index" @click="clickFunction(ele.body.pid)" class="col-2 card" style="font-size:14px;cursor: pointer"><img :src="require('../'+ele.body.imgurl)" alt="" style="width:150px;"><br><br>{{ele.body.pname}}</li>
+          
+        </b-row>
+        <b-row class="randomProductsClass flex-row flex-nowrap" align-v="center">
+            <li v-for="(ele, index) in getSub2Data" :key="index" @click="clickFunction(ele.body.pid)" class="col-2 card" style="font-size:14px;cursor: pointer">
               <img :src="require('../'+ele.body.imgurl)" alt="" style="width:150px;">
               <br><br>{{ele.body.pname}}</li>
 
-        </b-row>
-        <b-row class="randomProductsClass flex-row flex-nowrap" align-v="center">
-
-            <li v-for="(ele, index) in getSub1Data" :key="index" @click="clickFunction(ele.body.pid)" class="col-2 card" style="font-size:14px"><img :src="require('../'+ele.body.imgurl)" alt="" style="width:150px;"><br><br>{{ele.body.pname}}</li>
-          
         </b-row>
       </b-container>
     </div><br><br>
@@ -52,7 +52,8 @@ export default {
   },
   data() {
     return{
-      slide: null
+      slide: null,
+      imgArr: [1,2,3,4,5,6]
     }
   },
   methods: {

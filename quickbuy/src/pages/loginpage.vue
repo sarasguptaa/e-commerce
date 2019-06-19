@@ -67,10 +67,10 @@ export default {
                 toaster: "b-toaster-top-center",
                 solid: true
             })
-            setTimeout(router.push({path: "/"}), 3000)
+            router.push({path: "/"})
         },
         loginFailure(msg){
-            this.$bvToast.toast(msg,{
+            this.$bvToast.toast("Login Failed!!",{
                 title: "Failure Message",
                 toaster: "b-toaster-top-center",
                 solid: true

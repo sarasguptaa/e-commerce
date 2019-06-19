@@ -10,6 +10,7 @@
                         <h3>{{getBestProdData.pname}}</h3>
                         <div class="star-ratings-sprite" ><span :style="'width:'+ getBestProdData.merchantRating*100+'%'" class="star-ratings-sprite-rating"></span></div>
                         <p style="padding:10px 0 0 0; margin:0">by: {{getBestProdData.merchantName}}</p>
+                        <p style="padding:10px 0 0 0; margin:0">Stock: {{getBestProdData.stock}}</p>
                         <p style="padding:10px 0 0 0; margin:0">₹{{getBestProdData.price}}</p>
                     </div>
                     <hr style="margin:6px 0 16px 0">
@@ -35,6 +36,7 @@
                             <h4 style="font-size: 2.5vh">{{ele.pname}}</h4>
                             <div class="star-ratings-sprite" ><span :style="'width:'+ ele.merchantRating*100+'%'" class="star-ratings-sprite-rating"></span></div>
                             <p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p>
+                            <p style="padding:10px 0 0 0; margin:0">Stock: {{ele.stock}}</p>
                             <p style="padding:10px 0 0 0; margin:0">₹{{ele.price}}</p>
                         </div>
                         </b-row>

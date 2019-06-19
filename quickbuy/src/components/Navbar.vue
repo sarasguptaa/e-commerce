@@ -88,8 +88,9 @@ export default {
           localStorage.clear('mysession');
           this.$store.dispatch('updateUserId',"");
           this.$store.dispatch('emptyCart');
-          router.push({path:"/"})
-          location.reload()
+          router.push({path:"/"});
+          this.$router.go()
+          //location.reload()
         },
         orderhistoryFunction(){
           router.push({path:"/user/orderhistory"})

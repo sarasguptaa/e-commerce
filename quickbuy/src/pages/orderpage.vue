@@ -13,8 +13,6 @@
                         </b-col>
                         <b-col cols="8" style="text-align: left">
                             <div class="myHeader">
-                                {{ele.pid}}
-                                {{ele.mid}}
                                 <h3 style="font-size: 100%">{{ele.pname}}</h3>
                                 <p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p>
                                 <p style="padding:10px 0 0 0; margin:0">Quantity: {{ele.quantity}}</p>
@@ -87,6 +85,7 @@ export default {
             if(this.addressVar!=''){
                 let data = this.getCartData;
                 data["address"] = this.addressVar;
+                console.log(data)
                 commonApi.confirmOrder(data, (response)=>{
                     this.$store.dispatch('updateCart', response.body.productClassList)
                     console.log(response)
@@ -104,7 +103,7 @@ export default {
                             toaster: "b-toaster-top-center",
                             solid: true
                         })
-                        router.push({path: "/cart"})
+                        //router.push({path: "/cart"})
                     }
                 },(error)=>{
                     this.$bvToast.toast(msg,{

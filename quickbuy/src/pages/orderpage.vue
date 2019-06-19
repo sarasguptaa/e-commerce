@@ -7,15 +7,13 @@
             <hr>
             <div class="card" style="padding: 10px">
                 <div  v-for="(ele, index) in getCartData.productClassList" :key="index">
-                    
-                    
                     <b-row  class="merchantRow">
                         <b-col cols="2">
                             <img :src="require('../'+ele.imgurl)" class="img-responsive imgMain" id="displayImg">
                         </b-col>
                         <b-col cols="8" style="text-align: left">
                             <div class="myHeader">
-                                <h3>{{ele.pname}}</h3>
+                                <h3 style="font-size: 100%">{{ele.pname}}</h3>
                                 <p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p>
                                 <p style="padding:10px 0 0 0; margin:0">Quantity: {{ele.quantity}}</p>
                             </div>
@@ -82,17 +80,25 @@ export default {
         });
     },
     methods:{
-        ...mapActions(['']),
+        ...mapActions(['updateCart']),
         confirmFunction(){
             if(this.addressVar!=''){
                 let data = this.getCartData;
                 data["address"] = this.addressVar;
                 commonApi.confirmOrder(data, (response)=>{
-                    alert("Order Confirmed!")
+                    this.$store.dispatch('updateCart', response.body.productClassList)
+                    console.log(response)
+                    if(response.body.productClassList.length===0){
+                        alert("Order Confirmed!")
+                        router.push({path: "/"})
+                    }
+                    else{
+                        alert("Order not Placed Check Cart")
+                        router.push({path: "/cart"})
+                    }
                 },(error)=>{
                     alert("Order Not Placed")
                 });
-                router.push({path: "/"})
             }
             else
                 alert("Enter an address")
@@ -110,6 +116,7 @@ export default {
 }
 .imgMain{
     height: 150px;
+    max-width: 100%;
 }
 .myHeader{
     padding: 10px;

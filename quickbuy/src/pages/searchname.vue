@@ -20,10 +20,10 @@
         <b-container v-if="getSearchData.response">
             <b-row class="merchantRow" v-for="(ele, index) in getSearchData.response" :key="index">
                 <b-col cols="4" class="cardMerchant">
-                    <img :src="require('../'+ele.imgurl)" class="img-responsive imgMerchant" :alt="ele.pname" id="displayImg">
+                    <img :src="require('../'+ele.imgurl)" style="cursor: pointer" class="img-responsive imgMerchant" :alt="ele.pname" id="displayImg" @click="clickFunction(ele.pid)">
                 </b-col>
                 <b-col cols="8" style="text-align: left" class="cardMerchant">
-                    <div class="myHeader">
+                    <div class="myHeader" style="cursor: pointer" @click="clickFunction(ele.pid)">
                         <h3>{{ele.pname}}</h3>
                         <div class="star-ratings-sprite" ><span :style="'width:'+ ele.rating*20+'%'" class="star-ratings-sprite-rating"></span></div>
                         <!--p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p-->
@@ -38,6 +38,7 @@
 <script>
 import {mapActions} from 'vuex'
 import {mapGetters} from 'vuex'
+import router from '../router'
 export default {
     name: 'searchname',
     props:{
@@ -50,6 +51,9 @@ export default {
         },
         searchFailure(){
 
+        },
+        clickFunction(pid){
+            router.push({ path: '/products/'+pid+'/1'})
         }
     },
     computed:{

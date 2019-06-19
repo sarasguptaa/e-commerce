@@ -1,6 +1,6 @@
 <template>
   <div class="Products">
-    <product :prodpid="prodpid"></product>
+    <product :prodpid="prodpid" :searchvar="searchvar"></product>
   </div>
 </template>
 <script>
@@ -13,6 +13,7 @@ export default {
   data(){
       return{
           prodpid: this.$route.params.prodpid,
+          searchvar: this.$route.params.searchvar
       }
   }
 }

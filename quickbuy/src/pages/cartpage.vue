@@ -13,7 +13,7 @@
                         </b-col>
                         <b-col cols="7" style="text-align: left" class="cardMerchant">
                             <div class="myHeader">
-                                <h3>{{ele.pname}}</h3>
+                                <h3 style="font-size: 100%">{{ele.pname}}</h3>
                                 <p style="padding:10px 0 0 0; margin:0">by: {{ele.merchantName}}</p>
                                 <p style="padding:10px 0 0 0; margin:0">₹{{ele.price}}</p>
                             </div>

@@ -5,6 +5,7 @@ import Home from './views/Home.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode:"history",
   routes: [
     {
       path: '/',
@@ -35,6 +36,11 @@ export default new Router({
       component: () => import('@/views/Products.vue')
     },
     {
+      path: '/products/:prodpid/:searchvar',
+      name: 'productsearch',
+      component: () => import('@/views/Products.vue')
+    },
+    {
       path: '/cart',
       name: 'cart',
       component: () => import('@/views/Cart.vue')
@@ -53,6 +59,16 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: () => import('@/views/Login.vue')
+    },
+    {
+      path: '/user/orderhistory',
+      name: 'orderhistory',
+      component: () => import('@/views/Order History.vue')
+    },
+    {
+      path: '/category/:cname/subcategory/:subname/:subcidvar',
+      name: 'displaycat',
+      component: () => import('@/views/Display.vue')
     }
   ]
 })

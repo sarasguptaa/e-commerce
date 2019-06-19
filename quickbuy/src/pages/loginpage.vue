@@ -25,6 +25,12 @@
                             <button @click="callLogin()">Submit</button>
                         </b-col>
                     </b-row>
+                    <hr>
+                    <b-row>
+                        <b-col cols="12">
+                            <p style="margin: 0px">New User? <a style="color: #3396FF; cursor: pointer" @click="callSignup()">Sign Up</a></p>
+                        </b-col>
+                    </b-row>
                 </b-col>
                 <b-col cols="3"></b-col>
             </b-row>
@@ -35,6 +41,7 @@
 <script>
 import {mapActions} from 'vuex'
 import {mapGetters} from 'vuex'
+import router from '../router'
 export default {
     name: "loginpage",
     data(){
@@ -46,10 +53,17 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['setLoginData']),
-        loginSuccess(){
-            localStorage.setItem('mysession', JSON.stringify(getLoginData));
+        ...mapActions(['setLoginData','updateUserId','getCart']),
+        loginSuccess(resp){
+            localStorage.setItem('mysession', JSON.stringify(this.getLoginData));
+            this.$store.dispatch('updateUserId', this.getLoginData.userId)
+            this.$store.dispatch('getCart',{
+                data: this.getLoginData.userId,
+                success: ()=>{},
+                failure: ()=>{}
+            })
             alert("Login Success!")
+            router.push({path: "/"})
         },
         loginFailure(msg){
             alert(msg)
@@ -60,6 +74,9 @@ export default {
                 success: this.loginSuccess,
                 failure: this.loginFailure
             })
+        },
+        callSignup(){
+            router.push({path:"/signup"})
         }
     },
     computed: {

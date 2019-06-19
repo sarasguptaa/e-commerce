@@ -6,7 +6,7 @@ Vue.use(Resource)
 const urlsaras="172.16.26.33:8082";
 const urlaman="172.16.26.34:8081";
 const urlamanCart="172.16.26.34:8080";
-const urlniket="172.16.28.215:8080";
+const urlniket="172.16.26.45:8080";
 const commonApi = {
     userAuthApi (data, path, cb, errorHandler) {
         let headerObject = {
@@ -78,6 +78,20 @@ const commonApi = {
             errorHandler(error)
         })
     },
+    getFromPidSearch(path, cb, errorHandler) {
+        let headerObject = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        Vue.http.get('http://'+urlniket+'/getOneProdDet/'+path, {headers: headerObject}).then((res) => {
+            cb(res)
+        }, (error) => {
+            errorHandler(error)
+        })
+    },
     getAllCat(cb, errorHandler) {
         let headerObject = {
             'Access-Control-Allow-Origin': '*',
@@ -134,6 +148,20 @@ const commonApi = {
             errorhandler(error)
         })
     },
+    getAllProdWithSamePidSearch(data, cb, errorhandler) {
+        let headerObject = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        Vue.http.get('http://'+urlniket+'/getAllProdWithSamePid/'+data, {headers: headerObject}).then((res) => {
+            cb(res)
+        }, (error) => {
+            errorhandler(error)
+        })
+    },
     getCartDetails(data, cb, errorhandler) {
         let headerObject = {
             'Access-Control-Allow-Origin': '*',
@@ -142,7 +170,7 @@ const commonApi = {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        Vue.http.get('http://'+urlamanCart+'/findCartWithId/57339e44-c65a-4464-a81a-8434107d52d7', {headers: headerObject}).then((res) => {
+        Vue.http.get('http://'+urlamanCart+'/findCartWithId/'+data, {headers: headerObject}).then((res) => {
             cb(res)
         }, (error) => {
             errorhandler(error)
@@ -176,6 +204,34 @@ const commonApi = {
             errorhandler(error)
         })
     },
+    orderHistory(data, cb, errorhandler) {
+        let headerObject = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        Vue.http.get('http://'+urlamanCart+'/getOrderById/' + data, {headers: headerObject}).then((res) => {
+            cb(res)
+        }, (error) => {
+            errorhandler(error)
+        })
+    },
+    getAllRecords(cb, errorhandler) {
+        let headerObject = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        Vue.http.get('http://'+urlsaras+'/getAllRecords/', {headers: headerObject}).then((res) => {
+            cb(res)
+        }, (error) => {
+            errorhandler(error)
+        })
+    }
 }
 
 export default commonApi
